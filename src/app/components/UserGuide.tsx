@@ -60,8 +60,10 @@ function UserGuide() {
           <br />
           <span className="italic">
             Note : Right now, only C++ is supported. I will soon add support for other languages. This can be a slow process because at each step we are using to_string() function.
-            If the online IDE is not wroking, copy the boiler-plate code, follow the given steps, paste the generated output here and click on Visualize.
-            Consider increasing the time-limit & stack-limit of your local compiler if output is not generated.
+            <br />
+            If the online IDE is not wroking, copy the boiler-plate code. Paste the code in any other IDE & modify the code. <br />
+            Generated the output and paste in output field here and Visualize. <br />
+            Consider increasing the time-limit & stack-limit of compiler you are using if output is not generated.
           </span>
         </p>
       </div>

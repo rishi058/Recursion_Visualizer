@@ -14,7 +14,8 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 import useWindowDimensions from "../hooks/useWindowDimension";
 import { GraphData } from "../interface/graphData";
-import { getGeneratedOutput } from "../helper/output";
+import { dummyData, getGeneratedOutput } from "../helper/output";
+import FloatingBox from "./FloatingBox";
 
 
 export default function Visual()  {
@@ -23,14 +24,19 @@ export default function Visual()  {
 
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+
+  const [xFactor, setXFactor] = useState(200);
+  const [yFactor, setYFactor] = useState(120);
   
   const [hoveredNodeText, setHoveredNodeText] = useState('');
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  let xFactor = 200, yFactor = 120;
-
   useEffect(()=>{
     if(width!=undefined){
+      if (!data || !Array.isArray(data.nodes) || !Array.isArray(data.edges)) {
+        data = dummyData;
+    }
+
       let shift = (width/2) - nodes[0].position.x;
       let shiftedNodes = nodes.map(node => ({
         ...node,
@@ -44,6 +50,10 @@ export default function Visual()  {
   }, [width]);
 
     useEffect(() => {
+
+    if (!data || !Array.isArray(data.nodes) || !Array.isArray(data.edges)) {
+        data = dummyData;
+    }
 
     const manipulatedNodes = data.nodes.map(node => ({
       ...node,
@@ -106,6 +116,7 @@ export default function Visual()  {
         <Background variant={"dots" as BackgroundVariant} gap={12} size={1} />
       
       </ReactFlow>
+      <FloatingBox initialXFactor={xFactor} initialYFactor={yFactor} setXFactor={setXFactor} setYFactor={setYFactor}/>
       {hoveredNodeText && (
         <div
           style={{
