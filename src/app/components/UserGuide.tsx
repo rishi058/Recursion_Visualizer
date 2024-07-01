@@ -26,7 +26,7 @@ function UserGuide() {
         <p>
           <span className="font-semibold text-gray-400">Step 1 :</span>
           <br />
-          Add one extra parameter to your recursive function that will keep
+          Add one extra parameter(par) to your recursive function that will keep
           track of the parent node and will be used to build the tree.
           <br />
           Just after entering the recursive function, create a string named node
@@ -55,6 +55,13 @@ function UserGuide() {
           <br />
           <span className="bg-slate-500 text-white">
             nodeToAns[currentId] = to_string(return_value);
+          </span>
+          <br />
+          <br />
+          <span className="italic">
+            Note : Right now, only C++ is supported. I will soon add support for other languages. This can be a slow process because at each step we are using to_string() function.
+            If the online IDE is not wroking, copy the boiler-plate code, follow the given steps, paste the generated output here and click on Visualize.
+            Consider increasing the time-limit & stack-limit of your local compiler if output is not generated.
           </span>
         </p>
       </div>

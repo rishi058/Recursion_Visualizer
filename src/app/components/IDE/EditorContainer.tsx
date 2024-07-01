@@ -2,8 +2,8 @@ import React, { useContext, useState } from "react";
 import CodeEditor from "./CodeEditor";
 import styled from "styled-components";
 import Select from "react-select";
-import { languageMapData } from "./LanguageMap";
-import Link from "next/link";
+import { languageMapData } from "../../helper/LanguageMap";
+
 
 const StyledEditorContainer = styled.div`
   display: flex;
@@ -52,13 +52,18 @@ const EditorContainer = ({
   currentCode,
   setCurrentCode,
   runCode,
+  navigateToVisual,
+  reset
 }: {
   currentLanguage: string;
   setCurrentLanguage: (language: string) => void;
   currentCode: string;
   setCurrentCode: (code: string) => void;
   runCode: () => void;
+  navigateToVisual: () => void;
+  reset: ()=>void;
 }) => {
+  
   const themeOptions = [
     { value: "githubDark", label: "githubDark" },
     { value: "githubLight", label: "githubLight" },
@@ -117,6 +122,12 @@ const EditorContainer = ({
             value={currentTheme}
             onChange={handleThemeChange}
           />
+          <button
+            className="rounded-lg text-black w-40 h-10 border border-black text-opacity-70 hover:bg-black hover:text-white transition-colors duration-300"
+            onClick={reset}
+          >
+            Reset
+          </button>
         </SelectBars>
       </UpperToolBar>
 
@@ -130,18 +141,19 @@ const EditorContainer = ({
       </CodeEditorContainer>
       <div className="flex mt-4">
         <button
-          className="font-semibold rounded-lg bg-black text-white w-40 h-10 hover:bg-white hover:text-black hover:border-black hover:border-4"
+          className="rounded-lg bg-black text-white w-40 h-10 hover:bg-white hover:text-black hover:border-black hover:border-2 transition-colors duration-500"
           onClick={runCode}
         >
           Run Code
         </button>
         <div className="w-10"></div>
 
-        <Link href="/visual">
-          <div className="flex justify-center items-center mr-10 font-semibold rounded-lg bg-black text-white w-40 h-10 hover:bg-white hover:text-black hover:border-black hover:border-4">
-            Visualize
-          </div>
-        </Link>
+        <button
+          className="rounded-lg bg-black text-white w-40 h-10 hover:bg-white hover:text-black hover:border-black hover:border-2 transition-colors duration-500"
+          onClick={navigateToVisual}
+        >
+          Visualize
+        </button>
       </div>
     </StyledEditorContainer>
   );

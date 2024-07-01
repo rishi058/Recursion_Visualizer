@@ -13,7 +13,8 @@ import ReactFlow, {
 } from "reactflow";
 import "reactflow/dist/style.css";
 import useWindowDimensions from "../hooks/useWindowDimension";
-import { getGeneratedOutput } from "../../../public/output";
+import { GraphData } from "../interface/graphData";
+import { getGeneratedOutput } from "../helper/output";
 
 
 export default function Visual()  {
@@ -121,29 +122,4 @@ export default function Visual()  {
       )}
     </div>
   );
-}
-
-//-----------------------------------------------------
-
-export interface GraphData {
-  edges: Edge[];
-  nodes: Node[];
-}
-
-interface Edge {
-  id: string;
-  source: string;
-  target: string;
-}
-
-interface Node {
-  id: string;
-  position: {
-      x: number;
-      y: number;
-  };
-  data: {
-      label: string;
-      hidden: string;
-  };
 }
