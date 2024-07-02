@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Recursion Visualizer
 
-## Getting Started
+This tool allows you to generate recursion tree for any custom made C++ recursion function.
 
-First, run the development server:
+## Tech Stack & Libraries.
+    1. Next.js + Typescript.
+    2. TailWindCSS + Styled Component.
+    4. React Hot toast.
+    5. Axios.
+    6. React Flow.
+    7. Code Mirror.
+    8. Judge0 CE API - RAPID API.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## How it works ?
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    1. The C++ function stores the information about the recursion tree in a adjacency list
+       after the execution of recursion function.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+    2. Reingold-Tilford Tree Drawing Algorithm is used to assign coordinates to each node of the tree, so the nodes deosn't overlap.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+    3. This tree data is used by react-flow library to plot the tree. Adjust 'X' & 'Y'
+       parameter using slider to make the plot look better.
 
-## Learn More
+## Setup 
 
-To learn more about Next.js, take a look at the following resources:
+To set up this project on your machine, follow these steps:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone the repository: `git clone git@github.com:rishi058/Recursion_Visualizer.git`
+                          or just download the .zip file and extract it.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+2. Install dependencies: `npm install`
 
-## Deploy on Vercel
+3. Start the development server: `npm run dev`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Preview
+![Screenshot 2024-07-02 100559](https://github.com/rishi058/Recursion_Visualizer/assets/97884033/1023d448-139e-4725-8824-4ec1527fb08a)
+![ok1](https://github.com/rishi058/Recursion_Visualizer/assets/97884033/2b1f5da2-b1b7-4597-9217-2ba170979d04)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Upcoming Features
+    1. Add Support for JAVA, javascript Python.
+    2. Save the code(local storage).
+    3. Improved UI/UX.
+
+## Bugs
+    1. Tree Dissappears on refreshing.
+    2. Code resets on refreshing.
+    
