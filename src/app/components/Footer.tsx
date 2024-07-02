@@ -9,15 +9,15 @@ function Footer() {
     <div className="bg-cover bg-center text-center py-20" style={{ backgroundImage: `url(${FooterImage.src})` }}>
       <h2 className="text-xl font-semibold mb-4 pb-10">Connect with me :</h2>
       <div className="flex justify-center gap-4">
-        <a href="https://www.linkedin.com" target="_blank" className="flex items-center">
+        <a href="https://www.linkedin.com/in/rishi-raj-32648a196/" target="_blank" className="flex items-center">
           <FaLinkedin size={32} color='gray' />
          
         </a>
-        <a href="https://www.github.com" target="_blank" className="flex items-center ">
+        <a href="https://github.com/rishi058" target="_blank" className="flex items-center ">
           <FaGithub size={32}  color='gray' />
        
         </a>
-        <a href="https://www.instagram.com" target="_blank"className="flex items-center">
+        <a href="https://www.instagram.com/_rishi_ryan_/" target="_blank"className="flex items-center">
           <FaInstagram size={32}  color='gray' />
         </a>
       </div>
