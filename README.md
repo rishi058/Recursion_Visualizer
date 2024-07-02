@@ -39,10 +39,10 @@ To set up this project on your machine, follow these steps:
 
 ## Upcoming Features
     1. Add Support for JAVA, javascript Python.
-    2. Save the code(local storage).
+    2. Code Intellisense.
+    3. AI Code Assistent.
     3. Improved UI/UX.
 
 ## Bugs
-    1. Tree Dissappears on refreshing.
-    2. Code resets on refreshing.
+    1. Ineffecient state management.
     

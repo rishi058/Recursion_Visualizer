@@ -9,93 +9,92 @@ import ReactFlow, {
   useEdgesState,
   addEdge,
   BackgroundVariant,
-  MarkerType
+  MarkerType,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import useWindowDimensions from "../hooks/useWindowDimension";
 import { GraphData } from "../interface/graphData";
-import { dummyData, getGeneratedOutput } from "../helper/output";
 import FloatingBox from "./components/FloatingBox";
+import useLocalStorageState from "../helper/localStorage";
 
 
-export default function Visual()  {
+export default function Visual() {
   const { width, height } = useWindowDimensions();
-  let data  = getGeneratedOutput() as GraphData;
+  const [data, setData] = useLocalStorageState("output", dummyData.toString());
+
+  let graphData: GraphData = getGraphData(data);
 
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   const [xFactor, setXFactor] = useState(200);
   const [yFactor, setYFactor] = useState(120);
-  
-  const [hoveredNodeText, setHoveredNodeText] = useState('');
+
+  const [hoveredNodeText, setHoveredNodeText] = useState("");
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  useEffect(()=>{
-    if(width!=undefined){
-      if (!data || !Array.isArray(data.nodes) || !Array.isArray(data.edges)) {
-        data = dummyData;
-    }
-
-      let shift = (width/2) - nodes[0].position.x;
-      let shiftedNodes = nodes.map(node => ({
-        ...node,
-        position: {
-          ...node.position,
-          x: node.position.x + shift
-        }
-      }));
-      setNodes(shiftedNodes);
-    }
-  }, [width]);
-
-    useEffect(() => {
-
-    if (!data || !Array.isArray(data.nodes) || !Array.isArray(data.edges)) {
-        data = dummyData;
-    }
-
-    const manipulatedNodes = data.nodes.map(node => ({
+  useEffect(() => {
+    const manipulatedNodes = graphData.nodes.map((node) => ({
       ...node,
       position: {
         x: node.position.x * xFactor,
-        y: node.position.y * yFactor
-      }
+        y: node.position.y * yFactor,
+      },
     }));
 
-    const manipulatedEdges = data.edges.map(edge => ({
+    const manipulatedEdges = graphData.edges.map((edge) => ({
       ...edge,
-      animated : true,
+      animated: true,
       markerEnd: {
         type: MarkerType.ArrowClosed,
         width: 20,
         height: 20,
-        color: '#000000',
+        color: "#000000",
       },
       style: {
         strokeWidth: 2,
-        stroke: '#000000',
+        stroke: "#000000",
       },
     }));
 
     setEdges(manipulatedEdges);
-  
+
     setNodes(manipulatedNodes);
   }, [xFactor, yFactor]);
+
+  useEffect(() => {
+    if (width != undefined) {
+      let shift = width / 2 - nodes[0].position.x;
+      let shiftedNodes = nodes.map((node) => ({
+        ...node,
+        position: {
+          ...node.position,
+          x: node.position.x + shift,
+        },
+      }));
+      setNodes(shiftedNodes);
+    }
+  }, [width]);
 
   const onConnect = useCallback(
     (params: any) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
   );
 
-  const handleMouseMove = useCallback((event : React.MouseEvent<HTMLElement>) => {
-    setMousePosition({ x: event.clientX, y: event.clientY });
-  }, []);
+  const handleMouseMove = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      setMousePosition({ x: event.clientX, y: event.clientY });
+    },
+    []
+  );
 
   // Console.log(Hello)  // this will be printed whenever mouse-cursor mover or window is resize
 
   return (
-    <div style={{ width: "100vw", height: "100vh" }} onMouseMove={handleMouseMove}>
+    <div
+      style={{ width: "100vw", height: "100vh" }}
+      onMouseMove={handleMouseMove}
+    >
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -103,7 +102,7 @@ export default function Visual()  {
           setHoveredNodeText(node.data.hidden);
         }}
         onNodeMouseLeave={() => {
-          setHoveredNodeText('');
+          setHoveredNodeText("");
         }}
         nodesDraggable={true}
         onNodesChange={onNodesChange}
@@ -114,18 +113,22 @@ export default function Visual()  {
         <Controls />
         <MiniMap />
         <Background variant={"dots" as BackgroundVariant} gap={12} size={1} />
-      
       </ReactFlow>
-      <FloatingBox initialXFactor={xFactor} initialYFactor={yFactor} setXFactor={setXFactor} setYFactor={setYFactor}/>
+      <FloatingBox
+        initialXFactor={xFactor}
+        initialYFactor={yFactor}
+        setXFactor={setXFactor}
+        setYFactor={setYFactor}
+      />
       {hoveredNodeText && (
         <div
           style={{
-            position: 'fixed',
+            position: "fixed",
             left: mousePosition.x + 10,
             top: mousePosition.y + 10,
             padding: 10,
-            background: 'white',
-            border: '1px solid black',
+            background: "white",
+            border: "1px solid black",
           }}
         >
           {hoveredNodeText}
@@ -133,4 +136,34 @@ export default function Visual()  {
       )}
     </div>
   );
+}
+
+//-------------------------------------------------------------------------------------
+
+let dummyData = {
+  edges: [],
+  nodes: [
+    {
+      id: "1",
+      position: { x: 0, y: 0 },
+      data: { label: "Incorrect Output", hidden: "" },
+    },
+  ],
+};
+
+function getGraphData(data: string) {
+  try {
+    let tmp = JSON.parse(data);
+    if (
+      !tmp ||
+      !Array.isArray(tmp.nodes) ||
+      !Array.isArray(tmp.edges) ||
+      tmp.nodes.length === 0
+    ) {
+      return dummyData;
+    }
+    return tmp;
+  } catch (e) {
+    return dummyData;
+  }
 }

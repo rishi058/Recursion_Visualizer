@@ -1,17 +1,18 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import EditorContainer from "./EditorContainer";
 import { languageMapData } from "../../../helper/LanguageMap";
 import { postSubmission, getOutput } from "../../../api/ideServices";
 import InputConsole from "./InputConsole";
 import OutputConsole from "./OutputConsole";
-import { setGeneratedOutput } from "../../../helper/output";
-import { getSavedCode, setSavedCode } from "@/app/helper/localStorage";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import useLocalStorageState from "../../../helper/localStorage";
 
 function IDE() {
+  //---------------------------------------------------------------------------------
+
   const router = useRouter();
 
   function navigateToVisual() {
@@ -23,25 +24,60 @@ function IDE() {
     router.push("/visual");
   }
 
-  const [currentLanguage, setCurrentLanguage] = useState("cpp");
-  const [currentCode, setCurrentCode] = useState(
-    languageMapData["cpp"].defaultCode
-  );
-  const [currentInput, setCurrentInput] = useState("");
-  const [currentOutput, setCurrentOutput] = useState("");
+  //---------------------------------------------------------------------------------
 
-  function reset(){
+  // Local Storage Hooks
+  const [savedCode0, setSavedCode0] = useLocalStorageState("cpp", languageMapData["cpp"].defaultCode);
+  const [savedCode1, setSavedCode1] = useLocalStorageState("java", languageMapData["java"].defaultCode);
+  const [savedCode2, setSavedCode2] = useLocalStorageState("python", languageMapData["python"].defaultCode);
+  const [savedCode3, setSavedCode3] = useLocalStorageState("javascript", languageMapData["javascript"].defaultCode);
+
+  const [savedInput, setSavedInput] = useLocalStorageState("input", "");
+  const [savedOutput, setSavedOutput] = useLocalStorageState("output", "");
+
+  function reset() {
     setCurrentCode(languageMapData[currentLanguage].defaultCode);
-    setSavedCode("");
+    if(currentLanguage === "cpp") setSavedCode0("");
+    if(currentLanguage === "java") setSavedCode1("");
+    if(currentLanguage === "python")  setSavedCode2("");
+    if(currentLanguage === "javascript")setSavedCode3("");
   }
 
+
+  // IDE Hooks
+  const [currentLanguage, setCurrentLanguage] = useState("cpp");
+  const [currentCode, setCurrentCode] = useState(savedCode0);
+  const [currentInput, setCurrentInput] = useState(savedInput);
+  const [currentOutput, setCurrentOutput] = useState(savedOutput);
+
+  useEffect(() => { 
+    // saving code after every keyboard stroke.
+    if(currentLanguage === "cpp") setSavedCode0(currentCode);
+    if(currentLanguage === "java") setSavedCode1(currentCode);
+    if(currentLanguage === "python")  setSavedCode2(currentCode);
+    if(currentLanguage === "javascript")setSavedCode3(currentCode);
+  },[currentCode]);
+
   useEffect(() => {
-    let oldCode = getSavedCode();
-    if (oldCode == "" || oldCode == null || oldCode == undefined) {
-      return;
-    }
-    setCurrentCode(oldCode);
-  }, []);
+    // If saved code is present, then load it.
+    if(currentLanguage === "cpp") setCurrentCode(savedCode0);
+    if(currentLanguage === "java") setCurrentCode(savedCode1);
+    if(currentLanguage === "python") setCurrentCode(savedCode2);
+    if(currentLanguage === "javascript") setCurrentCode(savedCode3);
+  },[currentLanguage]);
+
+  useEffect(() => {
+    // saving input after every keyboard stroke.
+    setSavedInput(currentInput);
+  },[currentInput, setSavedInput]);
+
+  useEffect(() => {
+    // saving output after every keyboard stroke.
+    setSavedOutput(currentOutput);
+  },[currentOutput, setSavedOutput]);
+
+  //------------------------------------------------------------------------------------
+  
 
   const encode = (str: string): string => {
     return Buffer.from(str, "binary").toString("base64");
@@ -52,9 +88,6 @@ function IDE() {
   };
 
   const runCode = async () => {
-    // save the code, only saved until page is refreshed
-    setSavedCode(currentCode);
-
     const language_id = languageMapData[currentLanguage].id;
     const source_code = encode(currentCode);
     const stdin = encode(currentInput);
@@ -93,10 +126,14 @@ function IDE() {
 
     toast.success("Time taken to execute: " + res.time + "s");
 
-    // update the output
-    setGeneratedOutput(final_output);
+    // save the output in local storage
+    setSavedOutput(final_output);
+    // update the output of the UI
     setCurrentOutput(final_output);
   };
+
+
+  //---------------------------------------------------------------------------------
 
   return (
     <>
