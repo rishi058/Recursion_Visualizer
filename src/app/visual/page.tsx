@@ -15,7 +15,7 @@ import "reactflow/dist/style.css";
 import useWindowDimensions from "../hooks/useWindowDimension";
 import { GraphData } from "../interface/graphData";
 import { dummyData, getGeneratedOutput } from "../helper/output";
-import FloatingBox from "./FloatingBox";
+import FloatingBox from "./components/FloatingBox";
 
 
 export default function Visual()  {

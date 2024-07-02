@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaLinkedin, FaGithub, FaInstagram } from 'react-icons/fa';
-import FooterImage from '../../../public/footer.png';
+import FooterImage from '../../../../public/footer.png';
 
 function Footer() {
   return (

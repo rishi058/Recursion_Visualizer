@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import heroImage from "../../../public/hero.png";
 import Lottie from "lottie-react";
-import Animation from "../../../public/animation.json"
+import Animation from "../../../../public/animation.json"
 
 function HeroSection() {
   return (

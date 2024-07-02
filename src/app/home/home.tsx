@@ -5,7 +5,7 @@ import UserGuide from "./components/UserGuide";
 import Example from "./components/Example";
 import IDE from "./components/IDE/IDE";
 import Footer from "./components/Footer";
-import "./globals.css";
+import "./style.css";
 
 function Home() {
   return (

@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
-import example1 from '../../../public/example1.png'
-import example2 from '../../../public/example2.png'
+import example1 from '../../../../public/example1.png'
+import example2 from '../../../../public/example2.png'
 
 function Example() {
   return (

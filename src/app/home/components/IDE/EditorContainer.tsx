@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import CodeEditor from "./CodeEditor";
 import styled from "styled-components";
 import Select from "react-select";
-import { languageMapData } from "../../helper/LanguageMap";
+import { languageMapData } from "../../../helper/LanguageMap";
 
 
 const StyledEditorContainer = styled.div`

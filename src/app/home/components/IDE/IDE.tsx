@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import EditorContainer from "./EditorContainer";
-import { languageMapData } from "../../helper/LanguageMap";
-import { postSubmission, getOutput } from "../../api/ideServices";
+import { languageMapData } from "../../../helper/LanguageMap";
+import { postSubmission, getOutput } from "../../../api/ideServices";
 import InputConsole from "./InputConsole";
 import OutputConsole from "./OutputConsole";
-import { setGeneratedOutput } from "../../helper/output";
+import { setGeneratedOutput } from "../../../helper/output";
 import { getSavedCode, setSavedCode } from "@/app/helper/localStorage";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
