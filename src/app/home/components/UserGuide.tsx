@@ -66,7 +66,7 @@ function UserGuide() {
             <span className="font-bold">Note : </span><br />
             1. Right now, only C++ is supported. I will soon add support for other languages.
             <br /> <br />
-            2. The visualization can be a slow process because at each step we are using to_string() function.
+            2. The Code execution may be slow because at each step we are using to_string() function.
             <br /> <br />
             3. If the online IDE is not wroking, copy the boiler-plate in any other IDE & modify the code.
             Generate and paste the output here and click on Visualize. <br /> <br />

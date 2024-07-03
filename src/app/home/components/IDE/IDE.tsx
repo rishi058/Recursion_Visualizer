@@ -146,7 +146,7 @@ function IDE() {
     <>
       <div className="flex justify-center items-center py-10">
         <div className="w-1/2 border-4 border-gray-700 p-4 text-center rounded-md">
-          <p className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-black to-white">
+          <p className="text-lg font-bold text-gray-700">
             START EXPERIMENTING
           </p>
         </div>

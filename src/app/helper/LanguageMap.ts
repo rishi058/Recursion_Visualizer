@@ -46,6 +46,7 @@ export const languageMapData: LanguageMap = {
     + "    return tmp;\n"
     + "}\n\n"
     + "//!------------------------------------------------------------\n"
+    + "void writeData();\n"
     + "void initializeX(int n);\n"
     + "void updateXY(int root, int d, float modSum);\n"
     + "void makePositive();\n"
