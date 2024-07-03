@@ -53,7 +53,8 @@ const EditorContainer = ({
   setCurrentCode,
   runCode,
   navigateToVisual,
-  reset
+  reset,
+  isRunning
 }: {
   currentLanguage: string;
   setCurrentLanguage: (language: string) => void;
@@ -62,6 +63,7 @@ const EditorContainer = ({
   runCode: () => void;
   navigateToVisual: () => void;
   reset: ()=>void;
+  isRunning: boolean;
 }) => {
   
   const themeOptions = [
@@ -140,12 +142,37 @@ const EditorContainer = ({
         />
       </CodeEditorContainer>
       <div className="flex mt-4">
+      {isRunning ? (
+        <div className="flex items-center justify-center w-40 h-10">
+          <svg
+            className="animate-spin h-8 w-8 text-black"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+            ></path>
+          </svg>
+        </div>
+      ) : (
         <button
           className="rounded-lg bg-black text-white w-40 h-10 hover:bg-white hover:text-black hover:border-black hover:border-2 transition-colors duration-500"
           onClick={runCode}
         >
           Run Code
         </button>
+      )}
         <div className="w-10"></div>
 
         <button

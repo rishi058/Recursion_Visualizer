@@ -8,7 +8,7 @@ import InputConsole from "./InputConsole";
 import OutputConsole from "./OutputConsole";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import useLocalStorageState from "../../../helper/localStorage";
+import useLocalStorageState from "../../../hooks/localStorage";
 
 function IDE() {
   //---------------------------------------------------------------------------------
@@ -87,7 +87,12 @@ function IDE() {
     return Buffer.from(str, "base64").toString();
   };
 
+  //------------------------------------------------------------------------------------
+
+  const [isRunning, setIsRunning] = useState(false);
+
   const runCode = async () => {
+    setIsRunning(true);
     const language_id = languageMapData[currentLanguage].id;
     const source_code = encode(currentCode);
     const stdin = encode(currentInput);
@@ -130,6 +135,8 @@ function IDE() {
     setSavedOutput(final_output);
     // update the output of the UI
     setCurrentOutput(final_output);
+    // updating the sate of the Run Button
+    setIsRunning(false);
   };
 
 
@@ -153,6 +160,7 @@ function IDE() {
           runCode={runCode}
           navigateToVisual={navigateToVisual}
           reset={reset}
+          isRunning={isRunning}
         />
         <InputConsole
           currentInput={currentInput}
@@ -163,7 +171,7 @@ function IDE() {
           setCurrentOutput={setCurrentOutput}
         />
       </div>
-      <div className="h-40"></div>
+      <div className="h-20"></div>
     </>
   );
 }

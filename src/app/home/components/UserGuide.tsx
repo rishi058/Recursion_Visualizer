@@ -32,19 +32,18 @@ function UserGuide() {
           Just after entering the recursive function, create a string named node
           which includes the function name and the values of the parameters you
           want to see in the node.
-        </p>
-        <br />
-        <p className="italic">
-          Note: Do not make the size of the string node very large, as it will
-          affect the appearance of the tree. Insert large intermediate values by
-          following Step 2.
-        
           Then Insert this :{" "}
           <span className="bg-slate-500 text-white">
             int currentId = addNode(node); addEdge(par,currentId);
           </span>
           <br />
           In the recursive call, pass currentId for the parent parameter.
+        </p>
+        <br />
+        <p className="italic">
+          Note: Do not make the size of the string node very large, as it will
+          affect the appearance of the tree. Insert large intermediate values by
+          following Step 2. This data can be viewed by hovering over the node.
         </p>
         <br />
         <p className="">
@@ -59,11 +58,16 @@ function UserGuide() {
           <br />
           <br />
           <span className="italic">
-            Note : Right now, only C++ is supported. I will soon add support for other languages. This can be a slow process because at each step we are using to_string() function.
+            <span className="font-bold">Note : </span><br />
+            1. Right now, only C++ is supported. I will soon add support for other languages.
             <br />
-            If the online IDE is not wroking, copy the boiler-plate code. Paste the code in any other IDE & modify the code. <br />
+            2. The visualization can be a slow process because at each step we are using to_string() function.
+            <br />
+            3. If the online IDE is not wroking, copy the boiler-plate code. Paste the code in any other IDE & modify the code.
             Generated the output and paste in output field here and Visualize. <br />
-            Consider increasing the time-limit & stack-limit of compiler you are using if output is not generated.
+            4. Consider increasing the time-limit & stack-limit of compiler you are using if output is not generated. <br />
+            5. Dont add &quot;/n&quot; when coverting data to string. It will break the JSON. You can only use &quot;//n&quot; or the defined macro br(in C++) for a new line in strings. <br />
+            6. You can use pre-defined functions like getVectorToString, get2DVectorToString to convert vectors to string. <br />
           </span>
         </p>
       </div>

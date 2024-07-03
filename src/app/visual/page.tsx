@@ -15,8 +15,12 @@ import "reactflow/dist/style.css";
 import useWindowDimensions from "../hooks/useWindowDimension";
 import { GraphData } from "../interface/graphData";
 import FloatingBox from "./components/FloatingBox";
-import useLocalStorageState from "../helper/localStorage";
+import useLocalStorageState from "../hooks/localStorage";
+import MultilineNode from "./components/Multiline";
 
+const nodeTypes = {
+  multiline: MultilineNode,
+};
 
 export default function Visual() {
   const { width, height } = useWindowDimensions();
@@ -36,6 +40,7 @@ export default function Visual() {
   useEffect(() => {
     const manipulatedNodes = graphData.nodes.map((node) => ({
       ...node,
+      type: "multiline",
       position: {
         x: node.position.x * xFactor,
         y: node.position.y * yFactor,
@@ -98,6 +103,7 @@ export default function Visual() {
       <ReactFlow
         nodes={nodes}
         edges={edges}
+        nodeTypes={nodeTypes}
         onNodeMouseEnter={(event, node) => {
           setHoveredNodeText(node.data.hidden);
         }}
@@ -121,19 +127,22 @@ export default function Visual() {
         setYFactor={setYFactor}
       />
       {hoveredNodeText && (
-        <div
-          style={{
-            position: "fixed",
-            left: mousePosition.x + 10,
-            top: mousePosition.y + 10,
-            padding: 10,
-            background: "white",
-            border: "1px solid black",
-          }}
-        >
-          {hoveredNodeText}
-        </div>
-      )}
+  <div
+    style={{
+      position: "fixed",
+      left: mousePosition.x + 10,
+      top: mousePosition.y + 10,
+      padding: 10,
+      background: "white",
+      border: "1px solid black",
+    }}
+  >
+    {hoveredNodeText.split('\n').map((line, index) => (
+      <div key={index}>{line}</div>
+    ))}
+  </div>
+)}
+
     </div>
   );
 }

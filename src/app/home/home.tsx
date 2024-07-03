@@ -5,6 +5,7 @@ import UserGuide from "./components/UserGuide";
 import Example from "./components/Example";
 import IDE from "./components/IDE/IDE";
 import Footer from "./components/Footer";
+import PopularAlgorithms from "./components/PopularAlgorithms";
 import "./style.css";
 
 function Home() {
@@ -21,6 +22,7 @@ function Home() {
       <UserGuide />
       <Example />
       <IDE />
+      <PopularAlgorithms/>
       </div>
       <Footer />
     </div>
