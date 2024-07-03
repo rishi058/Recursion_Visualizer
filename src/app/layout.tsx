@@ -17,6 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+       <head>
+        <link rel="icon" href="/node2.png" />
+      </head>
       <body className={`${montserrat.className} bg-gray-200`}>{children}</body>
     </html>
   );
