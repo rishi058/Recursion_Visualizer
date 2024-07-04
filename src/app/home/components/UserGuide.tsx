@@ -14,33 +14,30 @@ function UserGuide() {
         <br />
         <p>
           <span className="font-semibold text-gray-400">Step 0 :</span>
-          <br /> Paste your recursive code into the IDE below. Make the
+          <br /> Code/Paste your recursive program into the IDE below. Make the
           following changes to your recursive code.
         </p>
         <br />
         <p className="italic">
           <span className="font-bold">Note: </span> 
-          Do not modify any of the already written code. If any of your
-          variable names collide with the boilerplate, please modify your code
-          accordingly.
+          Do not modify any of the already written code.
         </p>
         <br />
         <p>
           <span className="font-semibold text-gray-400">Step 1 :</span>
           <br />
-          Add one extra parameter(par) to your recursive function that will keep
-          track of the parent node and will be used to build the tree.
+          Add one extra parameter(let say &apos;ok&apos;) to your recursive and give it a default value 0.(See example image)
           <br />
-          Just after entering the recursive function, create a string named node
+          Just after entering the recursive function, create a string(let say &apos;nodeVal&apos;)
           which includes the function name and the values of the parameters you
-          want to see in the node.
+          want to display on the nodes.
           <br /> <br />
           Then Insert this :{" "}
           <span className="bg-slate-500 text-white">
-            int currentId = addNode(node); addEdge(par,currentId);
+            tv.make(nodeVal, ok);
           </span>
           <br />
-          In the recursive call, pass currentId for the parent parameter.
+            Don&apos;t forget to pass again the parameter &apos;ok&apos; in the recursive calls.
         </p>
         <br />
         <p className="italic">
@@ -53,10 +50,10 @@ function UserGuide() {
           <span className="font-semibold text-gray-400">Step 2 :</span>
           <br />
           If your function has a return value and you want to include it in the
-          visualization, then before returning the value, store it as:
+          visualization or You have to display a large value. then before returning the value, store it as:
           <br />
           <span className="bg-slate-500 text-white">
-            nodeToAns[currentId] = to_string(return_value);
+            tv.onHover(string-you-want-to-display, ok);
           </span>
           <br /> <br />
           At last run the code by giving input(if any), a output will be generated after that click on Visualize button.
@@ -71,7 +68,7 @@ function UserGuide() {
             3. If the online IDE is not wroking, copy the boiler-plate in any other IDE & modify the code.
             Generate and paste the output here and click on Visualize. <br /> <br />
             4. Consider increasing the time-limit & stack-limit of compiler you are using if output is not generated. <br /> <br />
-            5. Dont add &quot;/n&quot; when coverting data to string. It will break the JSON. You can only use &quot;//n&quot; or the defined macro br(in C++) for a new line in strings. <br /> <br />
+            5. <span className="bg-slate-500 text-white">Dont add &quot;/n&quot; </span>for new lines when coverting data to string. It will break the JSON. You can <span className="bg-slate-500 text-white">use defined macro br</span> for a new line in strings. <br /> <br />
             6. You can use pre-defined functions like getVectorToString, get2DVectorToString to convert vectors to string. <br /> <br />
           </span>
         </p>
