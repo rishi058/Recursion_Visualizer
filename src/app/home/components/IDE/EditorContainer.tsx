@@ -1,69 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import CodeEditor from "./CodeEditor";
-import styled from "styled-components";
 import Select from "react-select";
 import { languageMapData } from "../../../helper/LanguageMap";
+import useLocalStorageState from "../../../hooks/localStorage";
 
-
-const StyledEditorContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  min-height: 80vh;
-`;
-
-const UpperToolBar = styled.div`
-  background: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  padding: 0.8rem 0.4rem;
-
-  @media (max-width: 540px) {
-    height: 8rem;
-  }
-`;
-const SelectBars = styled.div`
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-
-  & > div {
-    width: 8rem;
-  }
-
-  & > div:last-child {
-    width: 10rem;
-  }
-`;
-
-const CodeEditorContainer = styled.div`
-  height: 100vh;
-  & > div {
-    height: 110%;
-  }
-`;
 const EditorContainer = ({
   currentLanguage,
   setCurrentLanguage,
   currentCode,
   setCurrentCode,
-  runCode,
-  navigateToVisual,
   reset,
-  isRunning
 }: {
   currentLanguage: string;
   setCurrentLanguage: (language: string) => void;
   currentCode: string;
   setCurrentCode: (code: string) => void;
-  runCode: () => void;
-  navigateToVisual: () => void;
   reset: ()=>void;
-  isRunning: boolean;
 }) => {
   
   const themeOptions = [
@@ -87,20 +39,27 @@ const EditorContainer = ({
     { value: "python", label: "python" },
   ];
 
+  const [savedTheme, setSavedTheme] = useLocalStorageState("ide_theme", "githubDark");
+
+  const [currentTheme, setCurrentTheme] = useState(() => {
+    for (let i = 0; i < themeOptions.length; i++) {
+      if (themeOptions[i].value === savedTheme) {
+        return themeOptions[i];
+      }
+    }
+    return themeOptions[0];
+  });
+
   const handleThemeChange = (selectedOption: any) => {
     setCurrentTheme(selectedOption);
+    setSavedTheme(selectedOption.value);
   };
 
   const handleLanguageChange = (selectedOption: any) => {
     setLanguage(selectedOption);
     setCurrentLanguage(selectedOption.value);
-    setCurrentCode(languageMapData[selectedOption.value].defaultCode);
   };
 
-  const [currentTheme, setCurrentTheme] = useState({
-    value: "githubDark",
-    label: "githubDark",
-  });
   const [language, setLanguage] = useState(() => {
     for (let i = 0; i < languageOptions.length; i++) {
       if (languageOptions[i].value === currentLanguage) {
@@ -110,79 +69,122 @@ const EditorContainer = ({
     return languageOptions[0];
   });
 
+  const selectStyles = {
+    control: (base: any) => ({
+      ...base,
+      backgroundColor: '#1a1f2c',
+      borderColor: '#424754',
+      color: '#dee2f4',
+      minHeight: '22px',
+      height: '22px',
+      fontSize: '12px',
+    }),
+    valueContainer: (base: any) => ({
+      ...base,
+      padding: '0 6px',
+      margin: 0,
+    }),
+    input: (base: any) => ({
+      ...base,
+      margin: 0,
+      padding: 0,
+    }),
+    indicatorSeparator: () => ({
+      display: 'none',
+    }),
+    indicatorsContainer: (base: any) => ({
+      ...base,
+      height: '22px',
+    }),
+    dropdownIndicator: (base: any) => ({
+      ...base,
+      padding: '2px 4px',
+    }),
+    singleValue: (base: any) => ({
+      ...base,
+      color: '#dee2f4',
+      margin: 0,
+    }),
+    menu: (base: any) => ({
+      ...base,
+      backgroundColor: '#252a37',
+      zIndex: 50
+    }),
+    menuPortal: (base: any) => ({
+      ...base,
+      zIndex: 9999
+    }),
+    option: (base: any, state: any) => ({
+      ...base,
+      backgroundColor: state.isFocused ? '#303442' : '#252a37',
+      color: '#dee2f4',
+      padding: '4px 8px',
+      fontSize: '12px',
+    })
+  };
+
   return (
-    <StyledEditorContainer>
-      <UpperToolBar>
-        <SelectBars>
-          <Select
-            options={languageOptions}
-            value={language}
-            onChange={handleLanguageChange}
-          />
-          <Select
-            options={themeOptions}
-            value={currentTheme}
-            onChange={handleThemeChange}
-          />
+    <div className="flex flex-col w-full h-full">
+      <div className="bg-surface-container-highest px-3 py-0.5 flex items-center justify-between border-b border-outline-variant/30 flex-wrap gap-2">
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-on-surface font-medium text-xs">
+            <span className="material-symbols-outlined !text-[14px] text-primary">code</span>
+            Playground
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-24">
+            <Select
+              options={languageOptions}
+              value={language}
+              onChange={handleLanguageChange}
+              styles={selectStyles}
+              menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+            />
+          </div>
+          <div className="w-32">
+            <Select
+              options={themeOptions}
+              value={currentTheme}
+              onChange={handleThemeChange}
+              styles={selectStyles}
+              menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+            />
+          </div>
           <button
-            className="rounded-lg text-black w-40 h-10 border border-black text-opacity-70 hover:bg-black hover:text-white transition-colors duration-300"
+            className="text-[11px] font-medium px-2 py-0.5 rounded border border-outline-variant/50 text-on-surface hover:bg-surface-container-low transition-colors"
             onClick={reset}
           >
             Reset
           </button>
-        </SelectBars>
-      </UpperToolBar>
+          <button
+            className="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-1 rounded hover:bg-surface-container-low"
+            onClick={() => {
+              const elem = document.getElementById("playground");
+              if (elem) {
+                if (document.fullscreenElement) {
+                  document.exitFullscreen();
+                } else {
+                  elem.requestFullscreen();
+                }
+              }
+            }}
+            title="Toggle Full Screen"  
+          >
+            <span className="material-symbols-outlined !text-[14px]">fullscreen</span>
+          </button>
+        </div>
+      </div>
 
-      <CodeEditorContainer>
+      <div className="flex-grow overflow-hidden relative">
         <CodeEditor
           currentLanguage={currentLanguage}
           currentTheme={currentTheme.value}
           currentCode={currentCode}
           setCurrentCode={setCurrentCode}
         />
-      </CodeEditorContainer>
-      <div className="flex mt-4">
-      {isRunning ? (
-        <div className="flex items-center justify-center w-40 h-10">
-          <svg
-            className="animate-spin h-8 w-8 text-black"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            ></circle>
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-            ></path>
-          </svg>
-        </div>
-      ) : (
-        <button
-          className="rounded-lg bg-black text-white w-40 h-10 hover:bg-white hover:text-black hover:border-black hover:border-2 transition-colors duration-500"
-          onClick={runCode}
-        >
-          Run Code
-        </button>
-      )}
-        <div className="w-10"></div>
-
-        <button
-          className="rounded-lg bg-black text-white w-40 h-10 hover:bg-white hover:text-black hover:border-black hover:border-2 transition-colors duration-500"
-          onClick={navigateToVisual}
-        >
-          Visualize
-        </button>
       </div>
-    </StyledEditorContainer>
+    </div>
   );
 };
 

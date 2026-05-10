@@ -63,7 +63,8 @@ const CodeEditor = ({
     return (
         <CodeMirror
             value={currentCode}
-            height="90%"
+            height="100%"
+            className="h-full"
             theme={theme}
             extensions={[
                 language,

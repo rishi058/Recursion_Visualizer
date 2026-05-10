@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { ChangeEvent } from "react";
 
 interface FloatingBoxProps {
   initialXFactor: number;
@@ -24,12 +24,10 @@ const FloatingBox: React.FC<FloatingBoxProps> = ({
   };
 
   return (
-    <div>
-      <div className="fixed right-0 top-1/2 transform -translate-y-1/2 bg-white w-[60px] h-[220px] flex justify-center items-center">
-        <div className="fixed right-3 top-[10%] transform -translate-y-1/2  text-xs font-bold text-gray-600 z-10">
-          X: {initialXFactor}
-        </div>
-        <div className="transform rotate-90 origin-center">
+    <div className="fixed right-6 top-1/2 transform -translate-y-1/2 bg-surface-container/80 backdrop-blur-md border border-outline-variant/50 rounded-2xl shadow-2xl p-6 flex gap-8 z-50 transition-all duration-300 hover:bg-surface-container/90 hover:border-outline-variant">
+      <div className="flex flex-col items-center gap-6">
+        <div className="text-xs font-mono text-on-surface-variant font-medium">X: {initialXFactor}</div>
+        <div className="h-40 w-4 flex justify-center items-center">
           <input
             id="range1"
             type="range"
@@ -37,13 +35,14 @@ const FloatingBox: React.FC<FloatingBoxProps> = ({
             max="500"
             value={initialXFactor}
             onChange={handleXChange}
-            className="w-40 h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+            className="w-40 h-1.5 bg-surface-variant rounded-lg appearance-none cursor-pointer transform -rotate-90 origin-center [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-xl [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(173,198,255,0.5)] [&::-webkit-slider-thumb]:transition-transform [&::-webkit-slider-thumb]:hover:scale-125"
           />
         </div>
       </div>
 
-      <div className="fixed right-[60px] top-1/2 transform -translate-y-1/2 bg-white w-[80px] h-[220px] flex justify-center items-center">
-        <div className="transform rotate-90 origin-center">
+      <div className="flex flex-col items-center gap-6">
+        <div className="text-xs font-mono text-on-surface-variant font-medium">Y: {initialYFactor}</div>
+        <div className="h-40 w-4 flex justify-center items-center">
           <input
             id="range2"
             type="range"
@@ -51,11 +50,8 @@ const FloatingBox: React.FC<FloatingBoxProps> = ({
             max="500"
             value={initialYFactor}
             onChange={handleYChange}
-            className="w-40 h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer"
+            className="w-40 h-1.5 bg-surface-variant rounded-lg appearance-none cursor-pointer transform -rotate-90 origin-center [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-xl [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(173,198,255,0.5)] [&::-webkit-slider-thumb]:transition-transform [&::-webkit-slider-thumb]:hover:scale-125"
           />
-        </div>
-        <div className="fixed right-6 top-[10%] transform -translate-y-1/2 text-xs font-bold text-gray-600 z-10">
-          Y: {initialYFactor}
         </div>
       </div>
     </div>

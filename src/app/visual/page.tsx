@@ -54,11 +54,11 @@ export default function Visual() {
         type: MarkerType.ArrowClosed,
         width: 20,
         height: 20,
-        color: "#000000",
+        color: "#8c909f",
       },
       style: {
         strokeWidth: 2,
-        stroke: "#000000",
+        stroke: "#8c909f",
       },
     }));
 
@@ -97,6 +97,7 @@ export default function Visual() {
 
   return (
     <div
+      className="bg-background text-on-background"
       style={{ width: "100vw", height: "100vh" }}
       onMouseMove={handleMouseMove}
     >
@@ -117,8 +118,14 @@ export default function Visual() {
         defaultViewport={{ x: 25, y: 25, zoom: 0.8 }}
       >
         <Controls />
-        <MiniMap />
-        <Background variant={"dots" as BackgroundVariant} gap={12} size={1} />
+        <MiniMap 
+          className="!bg-surface-container/80 backdrop-blur-md !border !border-outline-variant/50 shadow-2xl !rounded-2xl"
+          maskColor="rgba(14, 19, 32, 0.7)"
+          nodeColor="#adc6ff"
+          nodeStrokeWidth={3}
+          nodeBorderRadius={4}
+        />
+        <Background variant={"dots" as BackgroundVariant} gap={12} size={1} color="#424754" />
       </ReactFlow>
       <FloatingBox
         initialXFactor={xFactor}
@@ -128,13 +135,10 @@ export default function Visual() {
       />
       {hoveredNodeText && (
   <div
+    className="fixed z-50 p-4 bg-surface-container/90 backdrop-blur-md border border-outline-variant/50 rounded-lg shadow-2xl font-mono text-code-md text-on-surface pointer-events-none"
     style={{
-      position: "fixed",
       left: mousePosition.x + 10,
       top: mousePosition.y + 10,
-      padding: 10,
-      background: "white",
-      border: "1px solid black",
     }}
   >
     {hoveredNodeText.split('\n').map((line, index) => (

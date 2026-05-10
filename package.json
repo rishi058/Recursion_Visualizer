@@ -13,6 +13,8 @@
     "@codemirror/lang-java": "^6.0.1",
     "@codemirror/lang-javascript": "^6.2.2",
     "@codemirror/lang-python": "^6.1.6",
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "^3.9.1",
     "@uiw/codemirror-theme-bespin": "^4.22.2",
     "@uiw/codemirror-theme-dracula": "^4.22.2",
     "@uiw/codemirror-theme-duotone": "^4.22.2",
@@ -31,7 +33,8 @@
     "react-icons": "^5.2.1",
     "react-select": "^5.8.0",
     "reactflow": "^11.11.4",
-    "styled-components": "^6.1.11"
+    "styled-components": "^6.1.11",
+    "tsparticles": "^3.9.1"
   },
   "devDependencies": {
     "@types/node": "^20",
