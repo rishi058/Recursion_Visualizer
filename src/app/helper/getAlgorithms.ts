@@ -1,8 +1,5 @@
 'use server'
 
-import fs from 'fs';
-import path from 'path';
-
 export interface AlgorithmCode {
   language: string;
   extension: string;
@@ -16,49 +13,29 @@ export interface AlgorithmData {
 }
 
 export async function getAlgorithmsData(): Promise<AlgorithmData[]> {
-  const algoDir = path.join(process.cwd(), 'public/sample_codes/algo');
-  
-  if (!fs.existsSync(algoDir)) {
-    return [];
-  }
+  try {
+    // In deployed environments (Vercel, etc.) the filesystem is not accessible at
+    // runtime. Instead we fetch the pre-generated static JSON that is built by
+    // `scripts/generate-algo-data.mjs` (run via the `prebuild` npm hook) and
+    // served as a public asset.
+    const baseUrl =
+      process.env.NEXT_PUBLIC_BASE_URL ||
+      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
 
-  const folders = fs.readdirSync(algoDir, { withFileTypes: true })
-    .filter(dirent => dirent.isDirectory())
-    .map(dirent => dirent.name);
-
-  const algorithms: AlgorithmData[] = folders.map(folder => {
-    const folderPath = path.join(algoDir, folder);
-    const files = fs.readdirSync(folderPath);
-    
-    const codes: AlgorithmCode[] = files.map(file => {
-      const ext = path.extname(file).slice(1);
-      const filePath = path.join(folderPath, file);
-      const content = fs.readFileSync(filePath, 'utf-8');
-      
-      let language = ext;
-      if (ext === 'cpp') language = 'cpp';
-      if (ext === 'java') language = 'java';
-      if (ext === 'js') language = 'javascript';
-      if (ext === 'py') language = 'python';
-
-      return {
-        language,
-        extension: ext,
-        content
-      };
+    const res = await fetch(`${baseUrl}/algorithms-data.json`, {
+      // Always re-validate so a re-deploy picks up new algorithms.
+      cache: 'no-store',
     });
 
-    // Format name: binary_search -> Binary Search, TOH -> TOH
-    const name = folder.includes('_')
-      ? folder.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
-      : folder === folder.toUpperCase() ? folder : folder.charAt(0).toUpperCase() + folder.slice(1);
+    if (!res.ok) {
+      console.error(`Failed to fetch algorithms-data.json: ${res.status}`);
+      return [];
+    }
 
-    return {
-      name,
-      folderName: folder,
-      codes
-    };
-  });
-
-  return algorithms;
+    const data: AlgorithmData[] = await res.json();
+    return data;
+  } catch (err) {
+    console.error('getAlgorithmsData error:', err);
+    return [];
+  }
 }

@@ -1,0 +1,71 @@
+[
+  {
+    "name": "Fibonacci(DP)",
+    "folderName": "Fibonacci(DP)",
+    "codes": [
+      {
+        "language": "cpp",
+        "extension": "cpp",
+        "content": "vector<int> dp;\r\n\r\nint fib(int x, int ok=0){ \r\n    string nodeVal = \"fib(x = \" + to_string(x) + \")\";\r\n    tv.make(nodeVal, ok);\r\n\r\n    if(x<2){\r\n        tv.onHover(\"From base-case : \" + to_string(x), ok);\r\n        return x;\r\n    } \r\n\r\n    if(dp[x] != -1){tv.onHover(\"From DP : \" + to_string(dp[x]), ok); return dp[x];}\r\n\r\n    int tmp = fib(x - 1, ok) + fib(x - 2, ok);\r\n    dp[x] = tmp;\r\n    tv.onHover(to_string(tmp), ok);\r\n    return tmp;\r\n}\r\n\r\n//!----------------------------------------------------------------------------------\r\n\r\nint main()\r\n{\r\n    //Call you rescursive function here @ top\r\n    int n = 5;\r\n    dp.resize(n+1, -1);\r\n    fib(n);\r\n\r\n\r\n    //Don't remove the below lines\r\n    tv.buildTree();\r\n    tv.printData();\r\n}"
+      },
+      {
+        "language": "java",
+        "extension": "java",
+        "content": "import java.util.Arrays;\r\n\r\npublic class Main {\r\n\r\n    static TreeVisualizer tv = new TreeVisualizer();\r\n    static int[] dp; \r\n\r\n    public static int fib(int x, int ok) {\r\n        String nodeVal = \"fib(x = \" + x + \")\";\r\n        ok = tv.make(nodeVal, ok);\r\n\r\n        if (x < 2) {\r\n            tv.onHover(\"From base-case : \" + x, ok);\r\n            return x;\r\n        }\r\n\r\n        if (dp[x] != -1) {\r\n            tv.onHover(\"From DP : \" + dp[x], ok);\r\n            return dp[x];\r\n        }\r\n\r\n        int tmp = fib(x - 1, ok) + fib(x - 2, ok);\r\n        dp[x] = tmp; \r\n        tv.onHover(String.valueOf(tmp), ok);\r\n        return tmp;\r\n    }\r\n\r\n    public static int fib(int x) {\r\n        return fib(x, 0);\r\n    }\r\n\r\n    public static void main(String[] args) {\r\n        int n = 5;\r\n        \r\n        dp = new int[n + 1];\r\n        Arrays.fill(dp, -1);\r\n        \r\n        fib(n);\r\n\r\n        tv.buildTree();\r\n        tv.printData();\r\n    }\r\n}"
+      },
+      {
+        "language": "javascript",
+        "extension": "js",
+        "content": "let dp = [];\r\n\r\nfunction fib(x, ok = 0) {\r\n    const nodeVal = `fib(x = ${x})`;\r\n    ok = tv.make(nodeVal, ok);\r\n\r\n    if (x < 2) {\r\n        tv.onHover(`From base-case : ${x}`, ok);\r\n        return x;\r\n    }\r\n\r\n    // Check if the value has already been computed\r\n    if (dp[x] !== -1) {\r\n        tv.onHover(`From DP : ${dp[x]}`, ok);\r\n        return dp[x];\r\n    }\r\n\r\n    const tmp = fib(x - 1, ok) + fib(x - 2, ok);\r\n    dp[x] = tmp; // Cache the computed value\r\n    tv.onHover(String(tmp), ok);\r\n    return tmp;\r\n}\r\n\r\nfunction runMain() {\r\n    // Call your recursive function here\r\n    const n = 5;\r\n    \r\n    // Initialize DP array with -1\r\n    dp = new Array(n + 1).fill(-1);\r\n    \r\n    fib(n);\r\n\r\n    // Don't remove the below lines\r\n    tv.buildTree();\r\n    tv.printData();\r\n}"
+      },
+      {
+        "language": "python",
+        "extension": "py",
+        "content": "# Global DP array\r\ndp = []\r\n\r\ndef fib(x, ok=0):\r\n    nodeVal = f\"fib(x = {x})\"\r\n    ok = tv.make(nodeVal, ok)\r\n\r\n    if x < 2:\r\n        tv.onHover(f\"From base-case : {x}\", ok)\r\n        return x\r\n\r\n    # Check if the value has already been computed\r\n    if dp[x] != -1:\r\n        tv.onHover(f\"From DP : {dp[x]}\", ok)\r\n        return dp[x]\r\n\r\n    tmp = fib(x - 1, ok) + fib(x - 2, ok)\r\n    dp[x] = tmp # Cache the computed value\r\n    tv.onHover(str(tmp), ok)\r\n    return tmp\r\n\r\n# !---------------------- MAIN FUNCTION ----------------------------\r\n\r\ndef run_main():\r\n    global dp\r\n    n = 5\r\n    \r\n    # Initialize DP array with -1\r\n    dp = [-1] * (n + 1)\r\n    \r\n    # Call your recursive function here\r\n    fib(n)\r\n\r\n    # Don't remove the below lines\r\n    tv.buildTree()\r\n    tv.printData()"
+      }
+    ]
+  },
+  {
+    "name": "Merge Sort",
+    "folderName": "merge_sort",
+    "codes": [
+      {
+        "language": "cpp",
+        "extension": "cpp",
+        "content": "void merge(vector<int> &arr, int l, int m, int r){\r\n    int n1= m-l+1, n2= r-m;\r\n \r\n    vector<int> L(n1), R(n2);\r\n \r\n    for(int i=0; i<n1; i++){L[i] = arr[l+i];}\r\n    for(int j=0; j<n2; j++){R[j] = arr[m+1+j];}\r\n \r\n    int i = 0, j = 0, k = l; \r\n    while(i < n1 && j < n2){\r\n        if(L[i] <= R[j]){\r\n            arr[k++] = L[i++];\r\n        }\r\n        else{arr[k++] = R[j++];}\r\n    }\r\n \r\n    while(i < n1){arr[k++] = L[i++];}\r\n    while(j < n2){arr[k++] = R[j++];}\r\n}\r\n \r\nvoid mergeSort(vector<int> &arr, int begin, int end, int ok=0){\r\n    vector<int> tmp(arr.begin() + begin, arr.begin() + end + 1);\r\n    string nodeVal = \"Sort( \" + getVectorToString(tmp) + \" )\";\r\n    tv.make(nodeVal, ok);\r\n    \r\n    if(begin >= end){return;}\r\n\r\n    int mid = begin + (end - begin) / 2;\r\n    mergeSort(arr, begin, mid, ok);\r\n    mergeSort(arr, mid + 1, end, ok);\r\n    merge(arr, begin, mid, end);\r\n    \r\n    vector<int> tmp2(arr.begin() + begin, arr.begin() + end + 1);\r\n    string res = getVectorToString(tmp2);\r\n    tv.onHover(res, ok);\r\n}\r\n\r\n\r\n//!----------------------------------------------------------------------------------\r\n\r\nint main()\r\n{\r\n    //Call you rescursive function here @ top\r\n    vector<int> arr = {12, 50, 81, 1, 14, 70, 2, 15, 26, 9};\r\n    mergeSort(arr, 0, arr.size()-1);\r\n\r\n    //Don't remove the below lines\r\n    tv.buildTree();\r\n    tv.printData();\r\n}"
+      },
+      {
+        "language": "python",
+        "extension": "py",
+        "content": "def merge(arr, l, m, r):\r\n    n1 = m - l + 1\r\n    n2 = r - m\r\n    \r\n    # Initialize temporary arrays\r\n    L = [0] * n1\r\n    R = [0] * n2\r\n    \r\n    # Copy data to temp arrays L[] and R[]\r\n    for i in range(n1):\r\n        L[i] = arr[l + i]\r\n    for j in range(n2):\r\n        R[j] = arr[m + 1 + j]\r\n        \r\n    i = 0\r\n    j = 0\r\n    k = l \r\n    \r\n    # Merge the temp arrays back into arr[l..r]\r\n    while i < n1 and j < n2:\r\n        if L[i] <= R[j]:\r\n            arr[k] = L[i]\r\n            i += 1\r\n        else:\r\n            arr[k] = R[j]\r\n            j += 1\r\n        k += 1\r\n        \r\n    # Copy any remaining elements of L[]\r\n    while i < n1:\r\n        arr[k] = L[i]\r\n        i += 1\r\n        k += 1\r\n        \r\n    # Copy any remaining elements of R[]\r\n    while j < n2:\r\n        arr[k] = R[j]\r\n        j += 1\r\n        k += 1\r\n\r\ndef mergeSort(arr, begin, end, ok = 0):  \r\n    nodeVal = f\"MergeSort( {str(arr[begin:end+1])} )\"    \r\n    ok = tv.make(nodeVal, ok)\r\n    \r\n    if begin >= end:\r\n        return\r\n\r\n    mid = begin + (end - begin) // 2 # Use integer division\r\n    mergeSort(arr, begin, mid, ok)\r\n    mergeSort(arr, mid + 1, end, ok)\r\n    merge(arr, begin, mid, end) \r\n\r\n    res = str(arr[begin:end+1])\r\n    tv.onHover(res, ok)\r\n\r\n#!---------------------- MAIN FUNCTION ----------------------------\r\n\r\ndef run_main():\r\n    # Call your recursive function here\r\n    unsorted_list = [12, 50, 81, 1, 14, 70, 2, 15, 26, 9, -23]\r\n    mergeSort(unsorted_list, 0, len(unsorted_list)-1)\r\n    \r\n    # Don't remove the below lines\r\n    tv.buildTree()\r\n    tv.printData()"
+      }
+    ]
+  },
+  {
+    "name": "N Queens",
+    "folderName": "n_queens",
+    "codes": [
+      {
+        "language": "cpp",
+        "extension": "cpp",
+        "content": "int n;\r\nvector<vector<int>> board;\r\n\r\nbool is_safe(int row, int col){\r\n\r\n    int x = row, y = col;\r\n    //check in that row for above col \r\n    while(y>=0){\r\n        if(board[x][y]==1){return false;}\r\n        y--;\r\n    }\r\n\r\n    int xx = row, yy = col;\r\n    //check for diagonal\r\n    while(xx>=0 && yy>=0){\r\n        if(board[xx][yy]==1){return false;}\r\n        xx--; yy--;\r\n    }\r\n\r\n    int a = row, b = col;\r\n    //check for diagonal\r\n    while(a<n && b>=0){\r\n        if(board[a][b]==1){return false;}\r\n        a++; b--;\r\n    }\r\n\r\n    return true;\r\n\r\n} \r\n\r\nvoid solve(int col, int n, int ok=0){  \r\n    string nodeVal = get2DVectorToString(board);\r\n    tv.make(nodeVal, ok);\r\n    \r\n    // base case (if every col is filled)\r\n    if(col == n){\r\n        tv.onHover(\"ALL Columns Filled\", ok);\r\n        return;\r\n    }\r\n\r\n    //put queen in every row of diff col..\r\n    for(int row = 0; row<n; row++){\r\n        if(is_safe(row,col)){\r\n\r\n            // if placing queen is safe\r\n            board[row][col] = 1;\r\n\r\n            solve(col+1, n, ok);\r\n\r\n            //backtrack\r\n            board[row][col] = 0;\r\n        }\r\n    }\r\n\r\n    tv.onHover(\"Have Empty Columns\", ok);\r\n}  \r\n//!----------------------------------------------------------------------------------\r\n\r\nint main()\r\n{\r\n    //Call you rescursive function here @ top\r\n    n = 4;\r\n\r\n    for(int i=0; i<n; i++){\r\n        vector<int> temp(n, 0);\r\n        board.push_back(temp);\r\n    }\r\n\r\n    solve(0, n); \r\n\r\n    //Don't remove the below lines\r\n    tv.buildTree();\r\n    tv.printData();\r\n}"
+      },
+      {
+        "language": "javascript",
+        "extension": "js",
+        "content": "let n;\r\nlet board = [];\r\n\r\nfunction is_safe(row, col) {\r\n    let x = row, y = col;\r\n    while (y >= 0) {\r\n        if (board[x][y] === 1) return false;\r\n        y--;\r\n    }\r\n\r\n    let xx = row, yy = col;\r\n    // Check upper diagonal\r\n    while (xx >= 0 && yy >= 0) {\r\n        if (board[xx][yy] === 1) return false;\r\n        xx--; yy--;\r\n    }\r\n\r\n    let a = row, b = col;\r\n    // Check lower diagonal\r\n    while (a < n && b >= 0) {\r\n        if (board[a][b] === 1) return false;\r\n        a++; b--;\r\n    }\r\n\r\n    return true;\r\n}\r\n\r\nfunction solve(col, n, ok = 0) {\r\n    let nodeVal = get2DVectorToString(board);\r\n    tv.make(nodeVal, ok);\r\n    \r\n\r\n    if (col === n) {\r\n        tv.onHover(\"ALL Columns Filled\", ok);\r\n        return;\r\n    }\r\n\r\n   \r\n    for (let row = 0; row < n; row++) {\r\n        if (is_safe(row, col)) {\r\n            // Place the queen\r\n            board[row][col] = 1;\r\n            solve(col + 1, n, ok);\r\n            // Backtrack\r\n            board[row][col] = 0;\r\n        }\r\n    }\r\n\r\n    tv.onHover(\"Have Empty Columns\", ok);\r\n}\r\n\r\n\r\nfunction run_main() { \r\n    n = 4;\r\n    board = [];\r\n    for (let i = 0; i < n; i++) {\r\n        board.push(new Array(n).fill(0));\r\n    }\r\n    solve(0, n); \r\n\r\n    // Build and print tree\r\n    tv.buildTree();\r\n    tv.printData();\r\n}"
+      }
+    ]
+  },
+  {
+    "name": "TOH",
+    "folderName": "TOH",
+    "codes": [
+      {
+        "language": "cpp",
+        "extension": "cpp",
+        "content": "// Tower of Hanoi\r\nvoid solveTower(int n, char from='A', char to='B', char aux='C'){\r\n    if(n == 0){return;}\r\n\r\n    solveTower(n - 1, from, aux, to);\r\n\r\n    cout<<\"Move disk \"<<n<<\" from rod \"<<from<<\" to rod \"<<to<<\"\\n\";\r\n\r\n    solveTower(n - 1, aux, to, from);\r\n}\r\n\r\nint main(){\r\n    // Tower of Hanoi\r\n    int n; cin>>n;\r\n    solveTower(n);\r\n    return 0;\r\n}"
+      }
+    ]
+  }
+]

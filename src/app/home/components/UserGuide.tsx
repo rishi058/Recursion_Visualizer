@@ -16,7 +16,7 @@ function UserGuide() {
   };
 
   return (
-    <section className="flex flex-col gap-8 min-h-screen pt-24 px-margin-mobile md:px-margin-desktop w-full max-w-container-max mx-auto snap-start justify-center" id="how-to-use">
+    <section className="flex flex-col gap-8 min-h-screen py-24 px-margin-mobile md:px-margin-desktop w-full max-w-container-max mx-auto snap-start justify-center" id="how-to-use">
       <div className="flex flex-col gap-2">
         <h3 className="text-headline-md font-headline-md text-on-surface flex items-center gap-3">
           <span className="material-symbols-outlined text-primary">integration_instructions</span>
