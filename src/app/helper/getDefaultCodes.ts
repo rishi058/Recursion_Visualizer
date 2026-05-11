@@ -1,7 +1,4 @@
-'use server'
-
-import fs from 'fs';
-import path from 'path';
+'use client';
 
 export interface DefaultCodes {
   cpp: string;
@@ -10,38 +7,13 @@ export interface DefaultCodes {
   javascript: string;
 }
 
-const EXTENSION_MAP: Record<string, keyof DefaultCodes> = {
-  cpp: 'cpp',
-  java: 'java',
-  py: 'python',
-  js: 'javascript',
-};
-
 export async function getDefaultCodes(): Promise<DefaultCodes> {
-  const sampleDir = path.join(process.cwd(), 'public/sample_codes');
+  const [cpp, java, python, javascript] = await Promise.all([
+    fetch('/sample_codes/sample.cpp').then(r => r.text()),
+    fetch('/sample_codes/sample.java').then(r => r.text()),
+    fetch('/sample_codes/sample.py').then(r => r.text()),
+    fetch('/sample_codes/sample.js').then(r => r.text()),
+  ]);
 
-  const defaults: DefaultCodes = {
-    cpp: '',
-    java: '',
-    python: '',
-    javascript: '',
-  };
-
-  if (!fs.existsSync(sampleDir)) {
-    return defaults;
-  }
-
-  const files = fs.readdirSync(sampleDir).filter(f => {
-    const ext = path.extname(f).slice(1);
-    return ext in EXTENSION_MAP && f.startsWith('sample.');
-  });
-
-  for (const file of files) {
-    const ext = path.extname(file).slice(1) as keyof typeof EXTENSION_MAP;
-    const language = EXTENSION_MAP[ext];
-    const filePath = path.join(sampleDir, file);
-    defaults[language] = fs.readFileSync(filePath, 'utf-8');
-  }
-
-  return defaults;
+  return { cpp, java, python, javascript };
 }

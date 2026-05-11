@@ -23,8 +23,24 @@ function IDE() {
     getDefaultCodes().then((codes) => {
       setDefaultCodes(codes);
       defaultsLoadedRef.current = true;
+      // Seed localStorage for any language slot that is still empty.
+      // This handles first-time visitors and stale empty-string entries
+      // left over from previous sessions before default codes were loaded.
+      if (!savedCode0) setSavedCode0(codes.cpp);
+      if (!savedCode1) setSavedCode1(codes.java);
+      if (!savedCode2) setSavedCode2(codes.python);
+      if (!savedCode3) setSavedCode3(codes.javascript);
+      // Also update the active editor if it's currently blank
+      setCurrentCode((prev) => {
+        if (prev) return prev;
+        if (currentLanguage === 'cpp') return codes.cpp;
+        if (currentLanguage === 'java') return codes.java;
+        if (currentLanguage === 'python') return codes.python;
+        if (currentLanguage === 'javascript') return codes.javascript;
+        return codes.cpp;
+      });
     });
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function navigateToVisual() {
     if (currentOutput == "") {
